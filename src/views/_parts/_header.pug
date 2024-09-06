@@ -1,0 +1,24 @@
+header.border-b
+    +container('div', 'flex flex-wrap py-5 flex-col items-center md:flex-row')
+        a.flex.title-font.font-medium.items-center.text-gray-900.mb-4(class='md:mb-0')
+            img.w-8(src='./img/icon-node.svg', alt='Nodejs Boilerplate')
+            span.ml-3.text-xl Nodejs Boilerplate
+        nav.flex.flex-wrap.items-center.text-base.justify-center(
+            class='md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400'
+        )
+            a.mr-5(class='hover:text-gray-900', href='/') Home
+            a.mr-5(class='hover:text-gray-900', href='/blog') Blog
+            a.mr-5(class='hover:text-gray-900', href='/contact') Contact
+        button.inline-flex.items-center.bg-gray-100.border-0.py-1.px-3.rounded.text-base.mt-4(
+            class='focus:outline-none hover:bg-gray-200 md:mt-0'
+        )
+            | Button
+            svg.w-4.h-4.ml-1(
+                fill='none',
+                stroke='currentColor',
+                stroke-linecap='round',
+                stroke-linejoin='round',
+                stroke-width='2',
+                viewbox='0 0 24 24'
+            )
+                path(d='M5 12h14M12 5l7 7-7 7')

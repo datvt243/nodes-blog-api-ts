@@ -1,0 +1,7 @@
+mixin dFlex(className="-m-4")
+    .flex.flex-wrap(class=className)
+        block
+
+mixin dFlexItem(opt = {tag: 'div', padding: 'p-4', col: 'md:w-1/3'})
+    #{opt.tag || 'div'}(class=(opt.padding || 'p-4') + ' ' + (opt.col || 'md:w-1/3'))
+        block

@@ -1,0 +1,9 @@
+include ./_grid
+include ./_blog
+
+mixin headingPrimary(text = 'heading')
+    p.text-4xl.border-b-2.pb-3.mb-5.uppercase= text
+
+mixin container(tag='div', className = '')
+    #{tag}.container.mx-auto.px-2(class=className)
+        block

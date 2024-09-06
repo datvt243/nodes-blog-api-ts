@@ -1,0 +1,27 @@
+include ../_mixins/_mixins
+
+block vars
+    - title = '';
+    - description = '';
+    - keywords = '';
+    - path = '';
+    - mainClass = 'py-4';
+
+doctype html
+html.dark(lang='en')
+    include ../_parts/_head
+    body(class='')
+        #app
+            .app-container.flex.flex-col.min-h-screen
+                include ../_parts/_header
+                main.main-container.flex-grow(class=mainClass)
+                    block container
+                    // block container
+                include ../_parts/_footer
+
+        script(
+            src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+            integrity='sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz',
+            crossorigin='anonymous'
+        )
+        block script
