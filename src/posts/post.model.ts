@@ -4,17 +4,29 @@
  * Description:
  */
 
-import mongoose from 'mongoose';
+import mongoose, { Schema as MongooseSchema, Document, Mongoose } from 'mongoose';
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const schema = new Schema(
+export interface Post extends Document {
+    _id: typeof MongooseSchema.Types.ObjectId | null;
+    title: string;
+    slug: string;
+    isPublic: boolean;
+    content: string;
+    authorId: string;
+    /* createdAt?: number;
+    updatedAt?: number;
+    deletedAt?: number; */
+}
+
+const schema = new Schema<Post>(
     {
         _id: { type: ObjectId, required: [false, 'Vui lòng nhập ID'] },
         title: { type: String, default: '', required: [false, 'Vui lòng nhập Title'] },
         slug: { type: String, default: '', required: [false, 'Vui lòng nhập slug'] }, // unique: false
-        isPublic: { type: Boolean, default: '', required: [false, 'Vui lòng nhập isPublic'] },
+        isPublic: { type: Boolean, default: false, required: [false, 'Vui lòng nhập isPublic'] },
         content: { type: String, default: '', required: [false, 'Vui lòng nhập content'] },
         authorId: { type: String, default: '', required: [false, 'Vui lòng nhập authorId'] },
     },
@@ -23,4 +35,4 @@ const schema = new Schema(
     },
 );
 
-export default mongoose.model('posts', schema);
+export default mongoose.model<Post>('posts', schema);

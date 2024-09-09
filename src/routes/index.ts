@@ -25,7 +25,7 @@ router.all('*', (req: Request, res: Response) => {
     res.status(404).json({
         status: false,
         message: 'Not Found',
-    } as ResponseFormat);
+    });
 });
 
 /**

@@ -1,0 +1,11 @@
+mixin InputController(opt = { type: 'text', label: '', name: '', id: '' })
+    .form-controller
+        label.block.text-sm.font-medium.leading-6.text-gray-900(for=opt.id)= opt.label || 'Title'
+        .mt-2
+            input.block.w-full.rounded-md.border-0.text-gray-900.shadow-sm.ring-1.ring-inset.ring-gray-300.px-2(
+                id=opt.id,
+                name=opt.name,
+                type=opt.type,
+                class='py-1.5 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6',
+                placeholder='Vui lòng nhập'
+            )

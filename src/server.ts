@@ -12,16 +12,12 @@ import cors from 'cors';
 
 // use alias "@"
 import 'module-alias/register';
-// tuỳ chỉnh alias cho dist và src
-import './_alias';
+import './_alias'; // tuỳ chỉnh alias cho dist và src
 
 import { errorsMiddleware } from '@/middlewares';
+import { log } from '@/utils/helper';
 import { PORT } from '@/environment';
 import router from '@/routes';
-
-/* global.log = (mess: string | Record<string, string>): void => {
-    console.log(mess);
-}; */
 
 const runApp = () => {
     /**
@@ -66,23 +62,11 @@ const runApp = () => {
      * use Routes
      */
     app.use(router);
-    // Ví dụ một route có thể ném lỗi
-    /* app.get('/', (req, res) => {
-        throw new Error('Something bad happened!');
-    }); */
 
     /**
      * use middleware
      */
     app.use(errorsMiddleware);
-    /* app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-        console.error('niceeeeee ');
-        console.error(err.stack);
-        res.status(500).json({
-            status: false,
-            message: 'Something broke! error Middleware::' + err.message,
-        });
-    }); */
 
     /**
      * use template-engine
@@ -95,9 +79,7 @@ const runApp = () => {
      */
     app.listen(PORT, () => {
         const isProduction = process.env.NODE_ENV === 'production';
-        console.log(
-            `/** -------------------------------\n * Server is listening on ${isProduction ? 'Server::' : 'Localhost::'}${PORT}`,
-        );
+        log(`/** -------------------------------\n * Server is listening on ${isProduction ? 'Server::' : 'Localhost::'}${PORT}`);
     });
 };
 

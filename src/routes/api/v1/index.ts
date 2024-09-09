@@ -5,7 +5,6 @@
  */
 
 import express from 'express';
-import { ResponseFormat } from '@/types';
 import PostRouter from '@/posts/post.router';
 
 const router = express.Router();
@@ -18,7 +17,7 @@ router.all('*', (req, res) => {
         message: 'API Not Found',
         errors: [],
         data: null,
-    } as ResponseFormat);
+    });
 });
 
 export default router;

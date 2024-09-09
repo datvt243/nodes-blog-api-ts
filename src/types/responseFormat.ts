@@ -4,11 +4,12 @@
  * Description:
  */
 
-import type { Document } from './base';
+import { Document } from 'mongoose';
 
-export interface ResponseFormat {
-    status: boolean;
-    message: string;
+export interface ResponseFormat<T extends Document> {
+    status?: boolean;
+    statusCode?: number;
+    message?: string;
     errors?: string[];
-    data?: Document | Document[] | null;
+    data?: T | T[] | null;
 }

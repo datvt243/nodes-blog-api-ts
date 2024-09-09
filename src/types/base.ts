@@ -5,6 +5,7 @@
  */
 
 export interface Document {
+    /* _id: string | null; */
     [key: string]: string | number | boolean | Array<string | number>;
 }
 

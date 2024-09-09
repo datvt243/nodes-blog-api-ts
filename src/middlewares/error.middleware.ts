@@ -7,6 +7,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { log } from '@/utils/helper';
 
+import { MongooseErrorValidationError } from '@/libs/mongoose.lib';
+
 /* interface CustomError extends Error {
     status?: number;
 } */
@@ -21,6 +23,11 @@ export const errorsMiddleware = (error: any, req: Request, res: Response, next: 
     if (error instanceof ReferenceError) {
         _error = error.message;
         _code = 404;
+    }
+
+    if (error instanceof MongooseErrorValidationError) {
+        _error = error.name;
+        _code = 501;
     }
 
     res.status(_code || 400).json({

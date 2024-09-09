@@ -20,6 +20,10 @@ router.get('/contact', (req: Request, res: Response) => {
     res.status(200).render('contact');
 });
 
+router.get('/new-post', (req: Request, res: Response) => {
+    res.status(200).render('new_post');
+});
+
 router.get('/*', (req: Request, res: Response) => {
     res.status(404).render('404');
 });
