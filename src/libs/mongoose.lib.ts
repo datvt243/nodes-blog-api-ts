@@ -1,6 +1,10 @@
+/**
+ * Author: Đạt Võ - https://github.com/datvt243
+ * Date: `--/--`
+ * Description:
+ */
+
 import mongoose, { Error, Document, Model, UpdateQuery } from 'mongoose';
-import { ResponseFormat } from '@/types';
-import { convertReturn } from '@/utils/helper';
 
 export class MongooseErrorValidationError extends Error {
     constructor(message: string) {
@@ -13,7 +17,6 @@ export class MongooseErrorValidationError extends Error {
 interface MongooseBaseProvider {
     isValidObjectId: (id: string) => boolean;
     handleError: (error: any) => { errors: string[]; message: string };
-    /* handleTryCatch: (()=>{}) =>  */
 }
 class MongooseBase implements MongooseBaseProvider {
     constructor() {}

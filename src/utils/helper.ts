@@ -38,8 +38,12 @@ export const log = (error: string | { text: string; type?: keyof typeof consoleT
  * @returns Date
  */
 export const convertTime = (time: string | number) => {
+    if (!['string', 'number'].includes(typeof time)) {
+        return '--/--';
+    }
     if (typeof time === 'string') {
-        return new Date(time);
+        const _flag = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(time);
+        return _flag ? new Date(time) : '--/--';
     }
     return new Date(time);
 };
