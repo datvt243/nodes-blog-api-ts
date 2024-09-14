@@ -5,7 +5,7 @@
  */
 
 import express from 'express';
-import PostRouter from '@/posts/post.router';
+import PostRouter from '@/API/posts/post.router';
 
 const router = express.Router();
 

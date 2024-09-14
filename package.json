@@ -6,12 +6,13 @@
     "scripts": {
         "test": "jest",
         "dev": "NODE_ENV=development nodemon --exec ts-node src/server.ts",
-        "build": "tsc",
+        "build": "npm run remove-dist && tsc",
         "start": "NODE_ENV=production node ./dist/server.js",
         "lint": "eslint",
         "lint:fix": "eslint --fix",
         "tail:build": "npx tailwindcss -i ./src/assets/tailwindcss.css -o ./src/public/css/tailwindcss.css --watch",
-        "pug:format": "npx prettier --write \"src/views/**/*.pug\" --plugin=\"@prettier/plugin-pug\""
+        "pug:format": "npx prettier --write \"src/views/**/*.pug\" --plugin=\"@prettier/plugin-pug\"",
+        "remove-dist": "rm -rf dist"
     },
     "keywords": [],
     "author": "",

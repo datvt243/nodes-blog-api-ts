@@ -5,8 +5,8 @@
  */
 
 import { Request, Response } from 'express';
-import MODEL from './post.model';
 import type { Post } from './post.model';
+import MODEL from './post.model';
 import { PostService } from './post.service';
 
 /**
