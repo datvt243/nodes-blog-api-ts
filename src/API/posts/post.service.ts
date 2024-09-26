@@ -3,15 +3,14 @@
  * Date: `--/--`
  * Description:
  */
+import { Model, UpdateQuery } from 'mongoose';
 import slug from 'slug';
-import { Model, Document, UpdateQuery } from 'mongoose';
 
-import { PostValidator } from './post.validation';
-import type { Post } from './post.model';
-import { MongooseCRUD } from '@/libs/mongoose.lib';
 import type { Response } from '@/libs/joi.lib';
+import { MongooseCRUD } from '@/libs/mongoose.lib';
 import { convertReturn } from '@/utils/helper';
-import { updatePost } from './post.controller';
+import type { Post } from './post.model';
+import { PostValidator } from './post.validation';
 
 export class PostService extends PostValidator {
     db: any;
@@ -46,6 +45,11 @@ export class PostService extends PostValidator {
 
     findAllPost = async () => {
         const result = await this.db.findDocument({ model: this.model });
+        return convertReturn(result);
+    };
+
+    getDetail = async (id: string) => {
+        const result = await this.db.findDocumentById(id);
         return convertReturn(result);
     };
 

@@ -111,3 +111,20 @@ export const updatePost = async (req: Request, res: Response) => {
         data,
     });
 };
+
+/**
+ * get Detail
+ */
+export const getPostDetail = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ status: false, message: 'Không tìm thấy _id' });
+
+    const service = new PostService(MODEL);
+    const { status, statusCode, message, errors, data } = await service.getDetail(id);
+    res.status(statusCode || 200).json({
+        status,
+        message,
+        errors,
+        data,
+    });
+};

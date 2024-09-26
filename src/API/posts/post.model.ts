@@ -4,7 +4,7 @@
  * Description:
  */
 
-import mongoose, { Schema as MongooseSchema, Document, Mongoose } from 'mongoose';
+import mongoose, { Document, Schema as MongooseSchema } from 'mongoose';
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;

@@ -90,6 +90,22 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
         });
     };
 
+    findDocumentById = async (id: string) => {
+        const validObjectId = this.isValidObjectId(id);
+        if (!validObjectId)
+            return {
+                status: false,
+                errors: [],
+                message: 'ID không hợp lệ',
+                data: null,
+            };
+
+        return await this.handleTryCatch(async () => {
+            const _find = await this.model.findById(id).exec();
+            return { status: true, data: _find ? _find : null };
+        });
+    };
+
     saveDocument = async (document: T) => {
         return await this.handleTryCatch(async () => {
             // 1. Validation cấp database
@@ -109,7 +125,13 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
         const { _id = '' } = document;
 
         const validObjectId = this.isValidObjectId(_id as string);
-        if (!validObjectId) return false;
+        if (!validObjectId)
+            return {
+                status: false,
+                errors: [],
+                message: 'ID không hợp lệ',
+                data: null,
+            };
 
         // 1. Kiểm tra document tồn tại
         const _find = await this.model.findById(document._id).exec();
