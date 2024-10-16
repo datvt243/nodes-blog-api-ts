@@ -6,11 +6,11 @@
 
 import express from 'express';
 
-import { getAllBlog, createNewPost, deletePost, updatePost, getPostDetail } from './post.controller';
+import { getPosts, createNewPost, deletePost, updatePost, getPostDetail } from './post.controller';
 
 const router = express.Router();
 
-router.get('/', getAllBlog);
+router.get('/', getPosts);
 router.post('/create', createNewPost);
 router.patch('/update', updatePost);
 router.delete('/delete/:id', deletePost);

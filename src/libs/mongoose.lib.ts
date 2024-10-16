@@ -4,7 +4,7 @@
  * Description:
  */
 
-import mongoose, { Error, Document, Model, UpdateQuery } from 'mongoose';
+import mongoose, { Error, Document, Model, UpdateQuery, QueryOptions } from 'mongoose';
 
 export class MongooseErrorValidationError extends Error {
     constructor(message: string) {
@@ -16,7 +16,7 @@ export class MongooseErrorValidationError extends Error {
 
 interface MongooseBaseProvider {
     isValidObjectId: (id: string) => boolean;
-    handleError: (error: any) => { errors: string[]; message: string };
+    handleError: (error: unknown) => { errors: string[]; message: string };
 }
 class MongooseBase implements MongooseBaseProvider {
     constructor() {}
@@ -25,17 +25,19 @@ class MongooseBase implements MongooseBaseProvider {
         return mongoose.Types.ObjectId.isValid(id);
     }
 
-    handleError(error: any): { errors: string[]; message: string } {
-        let _message = '',
-            _errors: string[] = [];
+    handleError(error: unknown): { errors: string[]; message: string } {
+        let _message = '';
+        const _errors: string[] = [];
 
         if (error instanceof Error.ValidationError) {
             const { errors } = error;
             for (const [key, value] of Object.entries(errors)) {
                 _errors.push(`${key}::: ${value}`);
             }
-        } else {
+        } else if (error instanceof Error) {
             _message = error.message;
+        } else {
+            _message = 'unknown error';
         }
 
         return {
@@ -64,7 +66,7 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
         let _res: TryCatchReturn<R> = this.defineReturn;
         try {
             _res = await fn();
-        } catch (error) {
+        } catch (error: unknown) {
             const { errors, message } = this.handleError(error);
             _res = {
                 status: false,
@@ -76,7 +78,7 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
         return _res;
     };
 
-    findDocument = async (options: { select?: Record<string, any> }) => {
+    findDocument = async (options: { select?: QueryOptions<T> }) => {
         return await this.handleTryCatch(async () => {
             const _select = ((select) => {
                 if (!select || !Object.keys(select)) {
@@ -86,6 +88,26 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
             })(options?.select || {});
 
             const _find = await this.model.find(_select).exec();
+            return { status: true, data: _find ? _find : null };
+        });
+    };
+
+    findDocumentByPage = async (options: { select?: Record<string, string>; page: number; perPage?: number }) => {
+        return await this.handleTryCatch(async () => {
+            const _select = ((select) => {
+                if (!select || !Object.keys(select)) {
+                    return { isPublic: true };
+                }
+                return { isPublic: true, ...(options?.select || {}) };
+            })(options?.select || {});
+
+            const { page, perPage = 20 } = options;
+            const _find = await this.model
+                .find(_select)
+                .skip((page - 1) * perPage)
+                .limit(perPage)
+                .exec();
+
             return { status: true, data: _find ? _find : null };
         });
     };
@@ -157,7 +179,7 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
     deleteDocument = async (id: string) => {
         // 1. Kiểm tra định dạng Id
         const validObjectId = this.isValidObjectId(id);
-        if (!validObjectId) return false;
+        if (!validObjectId) return { status: false, message: 'Id validate faild' };
 
         // 1. Kiểm tra document tồn tại
         const _find = await this.model.findById(id).exec();

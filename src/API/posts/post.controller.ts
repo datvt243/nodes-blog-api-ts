@@ -13,9 +13,12 @@ import { PostService } from './post.service';
  * Lấy tất cả post
  * @returns Post[]
  */
-export const getAllBlog = async (req: Request, res: Response) => {
+export const getPosts = async (req: Request, res: Response) => {
+    const { page = 1, per_page = 20 } = req.query;
+
     const service = new PostService(MODEL);
-    const { status, message, errors, data } = await service.findAllPost();
+
+    const { status, message, errors, data } = await service.findPerPage({ page: +page, perPage: +per_page });
     res.status(status ? 200 : 401).json({
         status,
         message,
@@ -68,13 +71,13 @@ export const deletePost = async (req: Request, res: Response) => {
     if (!id) return res.status(400).json({ status: false, message: 'Không tìm thấy _id' });
 
     const service = new PostService(MODEL);
-    const { status, statusCode, message, errors, data } = await service.deletePost(id);
+    const { status, message } = await service.deletePost(id);
 
-    res.status(statusCode || 200).json({
+    res.status(status ? 200 : 400).json({
         status,
         message,
-        errors,
-        data,
+        errors: [],
+        data: null,
     });
 };
 

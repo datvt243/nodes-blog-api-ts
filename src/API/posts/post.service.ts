@@ -13,7 +13,7 @@ import type { Post } from './post.model';
 import { PostValidator } from './post.validation';
 
 export class PostService extends PostValidator {
-    db: any;
+    db: MongooseCRUD<Post>;
     model: Model<Post>;
 
     constructor(model: Model<Post>) {
@@ -23,8 +23,8 @@ export class PostService extends PostValidator {
     }
 
     checkDataInput(data: Post): Post {
-        !data._id && (data._id = null);
-        !data.isPublic && (data.isPublic = false);
+        if (!data._id) data._id = null;
+        if (!data.isPublic) data.isPublic = false;
         data.slug = slug(data.title as string, '-');
         return data;
     }
@@ -44,7 +44,13 @@ export class PostService extends PostValidator {
     }
 
     findAllPost = async () => {
-        const result = await this.db.findDocument({ model: this.model });
+        const result = await this.db.findDocument({});
+        return convertReturn(result);
+    };
+
+    findPerPage = async (opts: { page: number; perPage?: number }) => {
+        const { page, perPage = 20 } = opts;
+        const result = await this.db.findDocumentByPage({ page, perPage });
         return convertReturn(result);
     };
 
@@ -64,7 +70,7 @@ export class PostService extends PostValidator {
     };
 
     deletePost = async (id: string) => {
-        const deleted = await this.db.deleteDocument(id);
-        return convertReturn(deleted);
+        const { status, message } = await this.db.deleteDocument(id);
+        return { status, message };
     };
 }
