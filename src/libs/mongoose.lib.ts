@@ -98,7 +98,7 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
                 if (!select || !Object.keys(select)) {
                     return { isPublic: true };
                 }
-                return { isPublic: true, ...(options?.select || {}) };
+                return { status: 'publish', ...(options?.select || {}) };
             })(options?.select || {});
 
             const { page, perPage = 20 } = options;

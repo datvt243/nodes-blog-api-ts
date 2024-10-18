@@ -53,7 +53,14 @@ export const convertTime = (time: string | number) => {
  * @param val
  * @returns
  */
-export const convertReturn = (val: ResponseFormat<Document>) => {
+export interface ConvertReturn<R> {
+    status: boolean;
+    statusCode: number;
+    message: string;
+    errors: string[];
+    data: R | R[] | null;
+}
+export const convertReturn = <T extends Document>(val: ResponseFormat<T>): ConvertReturn<T> => {
     const { status = false, message = '', errors = [], data = null, statusCode = -1 } = val;
 
     const _statusCode: number = ((code) => {
