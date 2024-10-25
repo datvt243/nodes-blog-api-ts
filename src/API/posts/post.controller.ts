@@ -18,7 +18,8 @@ export const getPosts = async (req: Request, res: Response) => {
 
     const service = new PostService(MODEL);
 
-    const { status, message, errors, data } = await service.findPerPage({ page: +page, perPage: +per_page });
+    const _select = { status: 'publish' };
+    const { status, message, errors, data } = await service.findPerPage({ page: +page, perPage: +per_page, select: _select });
     res.status(status ? 200 : 401).json({
         status,
         message,

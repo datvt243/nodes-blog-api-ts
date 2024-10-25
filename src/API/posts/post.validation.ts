@@ -41,11 +41,6 @@ export class PostValidator {
                 'string.max': 'Status có nhiều nhất 255 ký tự',
             }),
 
-            /* isPublic: Joi.boolean().required().label('Public').messages({
-                'any.required': 'Public là bắt buộc',
-                'string.min': 'Public có ít nhất 3 ký tự',
-                'string.max': 'Public có nhiều nhất 255 ký tự',
-            }), */
             tags: Joi.array().items(Joi.string()).label('Tags'),
             authorId: Joi.string(),
         });

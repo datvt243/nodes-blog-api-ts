@@ -21,14 +21,10 @@ export interface Post extends Document {
     title: string;
     slug: string;
     status: PostStatus;
-    // isPublic: boolean;
     content: string;
     authorId: string;
     excerpt: string;
     tags: string[];
-    /* createdAt?: number;
-    updatedAt?: number;
-    deletedAt?: number; */
 }
 
 const schema = new Schema<Post>(
@@ -37,7 +33,6 @@ const schema = new Schema<Post>(
         title: { type: String, default: '', required: [false, 'Vui lòng nhập Title'] },
         slug: { type: String, default: '', required: [false, 'Vui lòng nhập slug'] }, // unique: false
         status: { type: String, default: EnumStatus.draft, required: [false, 'Vui lòng nhập Status'] },
-        // isPublic: { type: Boolean, default: false, required: [false, 'Vui lòng nhập isPublic'] },
         content: { type: String, default: '', required: [false, 'Vui lòng nhập content'] },
         excerpt: { type: String, default: '', required: [false, 'Vui lòng nhập excerpt'] },
         authorId: { type: String, default: '', required: [false, 'Vui lòng nhập authorId'] },

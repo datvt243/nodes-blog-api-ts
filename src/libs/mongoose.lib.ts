@@ -82,9 +82,9 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
         return await this.handleTryCatch(async () => {
             const _select = ((select) => {
                 if (!select || !Object.keys(select)) {
-                    return { isPublic: true };
+                    return {};
                 }
-                return { isPublic: true, ...(options?.select || {}) };
+                return { ...(options?.select || {}) };
             })(options?.select || {});
 
             const _find = await this.model.find(_select).exec();
@@ -96,9 +96,9 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
         return await this.handleTryCatch(async () => {
             const _select = ((select) => {
                 if (!select || !Object.keys(select)) {
-                    return { isPublic: true };
+                    return {};
                 }
-                return { status: 'publish', ...(options?.select || {}) };
+                return select;
             })(options?.select || {});
 
             const { page, perPage = 20 } = options;

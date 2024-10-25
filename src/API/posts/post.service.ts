@@ -62,9 +62,9 @@ export class PostService extends PostValidator implements BaseService {
         return convertReturn<Post>(result);
     };
 
-    findPerPage = async (opts: { page: number; perPage?: number }) => {
-        const { page, perPage = 20 } = opts;
-        const result = await this.db.findDocumentByPage({ page, perPage });
+    findPerPage = async (opts: { page: number; perPage?: number; select?: Record<string, string> }) => {
+        const { page, perPage = 20, select = {} } = opts;
+        const result = await this.db.findDocumentByPage({ page, perPage, select });
         return convertReturn<Post>(result);
     };
 

@@ -6,10 +6,12 @@
 
 import express from 'express';
 import PostRouter from '@/API/posts/post.router';
+import CategoryRouter from '@/API/categories/category.router';
 
 const router = express.Router();
 
 router.use('/post', PostRouter);
+router.use('/categories', CategoryRouter);
 
 router.all('*', (req, res) => {
     res.status(404).json({
