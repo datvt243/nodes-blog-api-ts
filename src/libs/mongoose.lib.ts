@@ -107,8 +107,17 @@ export class MongooseCRUD<T extends Document> extends MongooseBase {
                 .skip((page - 1) * perPage)
                 .limit(perPage)
                 .exec();
+            const total = await this.model.countDocuments(_select);
 
-            return { status: true, data: _find ? _find : null };
+            return {
+                status: true,
+                data: {
+                    data: _find ? _find : null,
+                    total,
+                    page,
+                    perPage,
+                },
+            };
         });
     };
 

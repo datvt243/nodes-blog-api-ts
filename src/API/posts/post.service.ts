@@ -19,7 +19,7 @@ import { PostValidator } from './post.validation';
 // }
 interface BaseService {
     findAllPost: () => Promise<ConvertReturn<Post>>;
-    findPerPage: (opts: { page: number; perPage?: number }) => Promise<ConvertReturn<Post>>;
+    // findPerPage: (opts: { page: number; perPage?: number }) => Promise<ConvertReturn<Post>>;
     getDetail: (id: string) => Promise<ConvertReturn<Post>>;
     savePost: (post: Post) => Promise<ConvertReturn<Post>>;
     updatePost: (post: UpdateQuery<Post>) => Promise<ConvertReturn<Post>>;
@@ -65,7 +65,14 @@ export class PostService extends PostValidator implements BaseService {
     findPerPage = async (opts: { page: number; perPage?: number; select?: Record<string, string> }) => {
         const { page, perPage = 20, select = {} } = opts;
         const result = await this.db.findDocumentByPage({ page, perPage, select });
-        return convertReturn<Post>(result);
+        // return convertReturn<Post>(result);
+        return {
+            status: result.status,
+            data: result.data,
+            message: result.message,
+            errors: result.errors,
+            statusCode: result.status ? 200 : 400,
+        };
     };
 
     getDetail = async (id: string) => {
