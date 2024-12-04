@@ -5,7 +5,6 @@
  */
 
 import { Request, Response } from 'express';
-// import type { Category } from './category.model';
 import MODEL, { Category } from './category.model';
 import { CategoryService } from './category.service';
 

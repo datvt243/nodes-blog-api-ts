@@ -7,6 +7,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const { PORT, MONGOBD_USER, MONGOBD_PASSWORD, MONGOBD_DB } = process.env;
+const { PORT, MONGOBD_USER, MONGOBD_PASSWORD, MONGOBD_DB, NODE_ENV = 'development' } = process.env;
 
-export { PORT, MONGOBD_USER, MONGOBD_PASSWORD, MONGOBD_DB };
+export { PORT, MONGOBD_USER, MONGOBD_PASSWORD, MONGOBD_DB, NODE_ENV };

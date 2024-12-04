@@ -4,7 +4,7 @@
  * Description:
  */
 import { Model, UpdateQuery } from 'mongoose';
-// import slug from 'slug';
+
 import slug from 'slug';
 import type { Response } from '@/libs/joi.lib';
 import { MongooseCRUD } from '@/libs/mongoose.lib';
@@ -13,9 +13,6 @@ import type { ConvertReturn } from '@/utils/helper';
 import type { Category } from './category.model';
 import { CategoryValidator } from './category.validation';
 
-// interface CategoryServiceInterface {
-//     findAllCategory: () => Promise<ConvertReturn<Category>>;
-// }
 interface BaseService {
     findAllCategory: () => Promise<ConvertReturn<Category>>;
     saveCategory: (post: Category) => Promise<ConvertReturn<Category>>;

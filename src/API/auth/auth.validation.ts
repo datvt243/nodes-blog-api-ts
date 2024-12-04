@@ -8,7 +8,7 @@ import { JoiHelper, JoiValidator } from '@/libs/joi.lib';
 import Joi, { ObjectSchema } from 'joi';
 import type { User } from '@/API/users/user.model';
 
-export class PostValidator {
+export class AuthValidator {
     schema: ObjectSchema;
     defineJoiHelper = new JoiHelper();
 
